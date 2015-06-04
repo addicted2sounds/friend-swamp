@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :inverse_friends, through: :accepted_inverse_friendship_requests, source: :user
 
   def self.regular(user_id)
-    includes(:friendship_requests, :inverse_friendship_requests)
+    eager_load(:friendship_requests, :inverse_friendship_requests)
       .where.not(id: user_id)
   end
 

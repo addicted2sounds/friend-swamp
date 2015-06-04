@@ -1,28 +1,27 @@
-h1 Listing friendship_requests
+h1 Listing Friendship requests
 
-h2 Pending
+h3 Pending
 table.table
   - @friendship_requests.pending.each do |friendship_request|
     tr
-      td = friendship_request.user.email
-      td = friendship_request.status
+      td = friendship_request.friend.email
       td
         = link_to 'Delete', friendship_request, method: :delete
 
-h2 Declined
+h3 Declined
 table.table
   - @friendship_requests.declined.each do |friendship_request|
     tr
-      td = friendship_request.user.email
+      td = friendship_request.friend.email
       td = friendship_request.status
       td
         = link_to 'Accept', accept_friendship_request_path(friendship_request), method: :patch
 
-h2 Accepted
+h3 Accepted
 table.table
   - @friendship_requests.accepted.each do |friendship_request|
     tr
-      td = friendship_request.user.email
+      td = friendship_request.friend.email
       td = friendship_request.status
       td
         = link_to 'Decline', decline_friendship_request_path(friendship_request), method: :patch
