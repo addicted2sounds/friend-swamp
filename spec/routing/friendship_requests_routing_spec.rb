@@ -31,5 +31,13 @@ RSpec.describe FriendshipRequestsController, type: :routing do
       expect(:delete => "/friendship_requests/1").to route_to("friendship_requests#destroy", :id => "1")
     end
 
+    it 'routes to #accept' do
+      expect(patch: '/friendship_requests/1/accept').to route_to('friendship_requests#accept', :id => '1')
+    end
+
+    it 'routes to #decline' do
+      expect(patch: '/friendship_requests/1/decline').to route_to('friendship_requests#decline', :id => '1')
+    end
+
   end
 end
