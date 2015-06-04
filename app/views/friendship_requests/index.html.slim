@@ -1,0 +1,23 @@
+h1 Listing friendship_requests
+
+table
+  thead
+    tr
+      th User
+      th Friend
+      th
+      th
+      th
+
+  tbody
+    - @friendship_requests.each do |friendship_request|
+      tr
+        td = friendship_request.user
+        td = friendship_request.friend
+        td = link_to 'Show', friendship_request
+        td = link_to 'Edit', edit_friendship_request_path(friendship_request)
+        td = link_to 'Destroy', friendship_request, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Friendship request', new_friendship_request_path
