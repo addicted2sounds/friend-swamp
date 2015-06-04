@@ -1,0 +1,15 @@
+db:
+  hostname: postgres.dev
+  dns_search: postgres.dev
+  image: 'postgres'
+  volumes:
+  - /var/lib/postgresql/data
+  ports:
+  - 5432:5432
+  environment:
+    POSTGRES_USER: rails
+    POSTGRES_PASSWORD: rails
+redis:
+  image: 'redis'
+  ports:
+  - 6379:6379
