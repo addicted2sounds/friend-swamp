@@ -9,7 +9,7 @@ class FriendsController < ApplicationController
 
   # POST /friends/:id/relieve
   def relieve
-    current_user.relieve_friend(@friend)
+    current_user.relieve_friend!(@friend)
     respond_to do |format|
       format.html { redirect_to friends_path, notice: 'Friendship is gone' }
     end
