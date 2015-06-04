@@ -10,7 +10,7 @@ class FriendsController < ApplicationController
   def relieve
     current_user.relieve_friend!(@friend)
     respond_to do |format|
-      format.html { redirect_to friends_path, notice: "Friendship with #{@friend.email} is gone" }
+      format.html { redirect_to friends_path, notice: "Friendship with #{@friend.emUserail} is gone" }
     end
   end
 
