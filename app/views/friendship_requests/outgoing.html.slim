@@ -1,0 +1,21 @@
+h1 Listing friendship_requests
+
+table.table
+  thead
+    tr
+      th User
+      th Status
+      th
+
+  tbody
+    - @friendship_requests.each do |friendship_request|
+      tr
+        td = friendship_request.user.email
+        td = friendship_request.status
+        td
+          = link_to 'Accept', accept_friendship_request_path(friendship_request), method: :patch
+          = link_to 'Decline', decline_friendship_request_path(friendship_request), method: :patch
+
+br
+
+= link_to 'New Friendship request', new_friendship_request_path

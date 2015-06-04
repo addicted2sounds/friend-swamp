@@ -3,9 +3,13 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   root 'users#index'
+
   resources :friendship_requests do
     patch :accept, on: :member
     patch :decline, on: :member
+    collection do
+      get :outgoing
+    end
   end
 
   get 'friends' => 'friends#index'

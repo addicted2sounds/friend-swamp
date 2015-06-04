@@ -9,6 +9,12 @@ class FriendshipRequestsController < ApplicationController
     @friendship_requests = FriendshipRequest.where(friend: current_user)
   end
 
+  # GET /friendship_requests/outgoing
+  # GET /friendship_requests/outgoing.json
+  def outgoing
+    @friendship_requests = FriendshipRequest.where(user: current_user)
+  end
+
   # GET /friendship_requests/1
   # GET /friendship_requests/1.json
   def show
