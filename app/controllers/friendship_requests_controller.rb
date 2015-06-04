@@ -1,5 +1,5 @@
 class FriendshipRequestsController < ApplicationController
-  before_action :set_friendship_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_friendship_request, only: [:show, :edit, :update, :destroy, :accept, :decline]
   before_action :set_friend, only: [:new, :create]
   before_action :authenticate_user!
 
@@ -50,6 +50,24 @@ class FriendshipRequestsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @friendship_request.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # PATCH /friendship_requests/1/accept
+  def accept
+    @friendship_request.update_attribute(:status, :accepted)
+    respond_to do |format|
+      format.html { redirect_to friendship_requests_url, notice: 'Friendship request has been accepted.' }
+      format.json { render :show, status: :ok, location: @friendship_request }
+    end
+  end
+
+  # PATCH /friendship_requests/1/decline
+  def decline
+    @friendship_request.update_attribute(:status, :declined)
+    respond_to do |format|
+      format.html { redirect_to friendship_requests_url, notice: 'Friendship request has been declined.' }
+      format.json { render :show, status: :ok, location: @friendship_request }
     end
   end
 

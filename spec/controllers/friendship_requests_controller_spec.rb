@@ -19,23 +19,38 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe FriendshipRequestsController, type: :controller do
-  let(:user) { create :user }
-  before :each do
-    sign_in user
-  end
-
   describe 'GET #index' do
-    let(:request) { create :friendship_request, friend: user}
-
+    let(:friendship_request) { create :friendship_request }
+    before :each do
+      sign_in friendship_request.friend
+    end
     it 'assigns all users requested friendship as @users' do
       get :index
-      expect(assigns(:friendship_requests)).to eq [request]
+      expect(assigns(:friendship_requests)).to eq [friendship_request]
     end
 
     it 'includes request only for current user' do
       other_request = create :friendship_request
       get :index
       expect(assigns(:friendship_requests)).not_to include other_request
+    end
+  end
+
+  describe 'PATCH #accept' do
+    let(:friendship_request) { create :friendship_request }
+    it 'change request status to :accepted' do
+      patch :accept, { id: friendship_request.to_param }
+      friendship_request.reload
+      expect(friendship_request.status).to eq 'accepted'
+    end
+  end
+
+  describe 'PATCH #decline' do
+    let(:friendship_request) { create :friendship_request }
+    it 'change request status to :declined' do
+      patch :decline, { id: friendship_request.to_param }
+      friendship_request.reload
+      expect(friendship_request.status).to eq 'declined'
     end
   end
 end
