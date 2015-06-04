@@ -8,5 +8,5 @@
 
   .field
     = f.label :friend
-    = f.text_field :friend
+    = f.collection_select :friend_id, User.all, :id, :email
   .actions = f.submit

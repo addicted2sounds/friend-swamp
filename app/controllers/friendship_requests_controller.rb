@@ -1,12 +1,12 @@
 class FriendshipRequestsController < ApplicationController
   before_action :set_friendship_request, only: [:show, :edit, :update, :destroy]
-  before_action :set_friend, only: [:new]
+  before_action :set_friend, only: [:new, :create]
   before_action :authenticate_user!
 
   # GET /friendship_requests
   # GET /friendship_requests.json
   def index
-    @friendship_requests = FriendshipRequest.all
+    @friendship_requests = FriendshipRequest.where(friend: current_user)
   end
 
   # GET /friendship_requests/1
@@ -27,7 +27,7 @@ class FriendshipRequestsController < ApplicationController
   # POST /friendship_requests.json
   def create
     @friendship_request = FriendshipRequest.new(friendship_request_params)
-
+    @friendship_request.user = current_user
     respond_to do |format|
       if @friendship_request.save
         format.html { redirect_to @friendship_request, notice: 'Friendship request was successfully created.' }

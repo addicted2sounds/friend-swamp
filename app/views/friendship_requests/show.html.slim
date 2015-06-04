@@ -1,11 +1,8 @@
 p#notice = notice
 
 p
-  strong User:
-  = @friendship_request.user
-p
   strong Friend:
-  = @friendship_request.friend
+  = @friendship_request.friend.email
 
 = link_to 'Edit', edit_friendship_request_path(@friendship_request)
 '|

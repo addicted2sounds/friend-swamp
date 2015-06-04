@@ -19,141 +19,23 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe FriendshipRequestsController, type: :controller do
-
-  # This should return the minimal set of attributes required to create a valid
-  # FriendshipRequest. As you add validations to FriendshipRequest, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # FriendshipRequestsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
-  describe "GET #index" do
-    it "assigns all friendship_requests as @friendship_requests" do
-      friendship_request = FriendshipRequest.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:friendship_requests)).to eq([friendship_request])
-    end
+  let(:user) { create :user }
+  before :each do
+    sign_in user
   end
 
-  describe "GET #show" do
-    it "assigns the requested friendship_request as @friendship_request" do
-      friendship_request = FriendshipRequest.create! valid_attributes
-      get :show, {:id => friendship_request.to_param}, valid_session
-      expect(assigns(:friendship_request)).to eq(friendship_request)
+  describe 'GET #index' do
+    let(:request) { create :friendship_request, friend: user}
+
+    it 'assigns all users requested friendship as @users' do
+      get :index
+      expect(assigns(:friendship_requests)).to eq [request]
+    end
+
+    it 'includes request only for current user' do
+      other_request = create :friendship_request
+      get :index
+      expect(assigns(:friendship_requests)).not_to include other_request
     end
   end
-
-  describe "GET #new" do
-    it "assigns a new friendship_request as @friendship_request" do
-      get :new, {}, valid_session
-      expect(assigns(:friendship_request)).to be_a_new(FriendshipRequest)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested friendship_request as @friendship_request" do
-      friendship_request = FriendshipRequest.create! valid_attributes
-      get :edit, {:id => friendship_request.to_param}, valid_session
-      expect(assigns(:friendship_request)).to eq(friendship_request)
-    end
-  end
-
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new FriendshipRequest" do
-        expect {
-          post :create, {:friendship_request => valid_attributes}, valid_session
-        }.to change(FriendshipRequest, :count).by(1)
-      end
-
-      it "assigns a newly created friendship_request as @friendship_request" do
-        post :create, {:friendship_request => valid_attributes}, valid_session
-        expect(assigns(:friendship_request)).to be_a(FriendshipRequest)
-        expect(assigns(:friendship_request)).to be_persisted
-      end
-
-      it "redirects to the created friendship_request" do
-        post :create, {:friendship_request => valid_attributes}, valid_session
-        expect(response).to redirect_to(FriendshipRequest.last)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns a newly created but unsaved friendship_request as @friendship_request" do
-        post :create, {:friendship_request => invalid_attributes}, valid_session
-        expect(assigns(:friendship_request)).to be_a_new(FriendshipRequest)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {:friendship_request => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
-  end
-
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested friendship_request" do
-        friendship_request = FriendshipRequest.create! valid_attributes
-        put :update, {:id => friendship_request.to_param, :friendship_request => new_attributes}, valid_session
-        friendship_request.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "assigns the requested friendship_request as @friendship_request" do
-        friendship_request = FriendshipRequest.create! valid_attributes
-        put :update, {:id => friendship_request.to_param, :friendship_request => valid_attributes}, valid_session
-        expect(assigns(:friendship_request)).to eq(friendship_request)
-      end
-
-      it "redirects to the friendship_request" do
-        friendship_request = FriendshipRequest.create! valid_attributes
-        put :update, {:id => friendship_request.to_param, :friendship_request => valid_attributes}, valid_session
-        expect(response).to redirect_to(friendship_request)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns the friendship_request as @friendship_request" do
-        friendship_request = FriendshipRequest.create! valid_attributes
-        put :update, {:id => friendship_request.to_param, :friendship_request => invalid_attributes}, valid_session
-        expect(assigns(:friendship_request)).to eq(friendship_request)
-      end
-
-      it "re-renders the 'edit' template" do
-        friendship_request = FriendshipRequest.create! valid_attributes
-        put :update, {:id => friendship_request.to_param, :friendship_request => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested friendship_request" do
-      friendship_request = FriendshipRequest.create! valid_attributes
-      expect {
-        delete :destroy, {:id => friendship_request.to_param}, valid_session
-      }.to change(FriendshipRequest, :count).by(-1)
-    end
-
-    it "redirects to the friendship_requests list" do
-      friendship_request = FriendshipRequest.create! valid_attributes
-      delete :destroy, {:id => friendship_request.to_param}, valid_session
-      expect(response).to redirect_to(friendship_requests_url)
-    end
-  end
-
 end
