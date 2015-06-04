@@ -1,0 +1,27 @@
+h2 Your friends
+table.table
+  thead
+    tr
+      th User
+      th
+
+  tbody
+    - @friends.each do |user|
+      tr
+        td = user.email
+        td
+          = link_to 'Relieve', relieve_friend_path(user), method: :patch
+
+h2 Users who befriended you
+table.table
+  thead
+    tr
+      th User
+      th
+
+  tbody
+    - @inverse_friends.each do |user|
+      tr
+        td = user.email
+        td
+          = link_to 'Relieve', relieve_friend_path(user), method: :patch

@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
 
   has_many :friends, through: :friendship_requests
   has_many :inverse_friends, through: :inverse_friendship_request, source: :user
+
+  def relieve_friend(user)
+
+  end
 end
