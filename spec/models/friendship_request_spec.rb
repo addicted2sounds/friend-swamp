@@ -9,13 +9,11 @@ RSpec.describe FriendshipRequest, type: :model do
   end
 
   describe '.relieve' do
-    let(:request) { create :friendship_request }
-    before :each do
-      request.relieve!
-    end
-
-    it 'changes status to :relived' do
-      expect(request.status).to eq 'relieved'
+    it 'deletes request' do
+      request = create :friendship_request
+      expect {
+        request.relieve!
+      }.to change(FriendshipRequest, :count).by -1
     end
   end
 

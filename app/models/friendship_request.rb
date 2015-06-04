@@ -12,7 +12,7 @@ class FriendshipRequest < ActiveRecord::Base
     end
   end
   def relieve!
-    update_attribute(:status, :relieved)
+    self.destroy
   end
 
 end
