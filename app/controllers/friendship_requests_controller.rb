@@ -1,5 +1,7 @@
 class FriendshipRequestsController < ApplicationController
   before_action :set_friendship_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_friend, only: [:new]
+  before_action :authenticate_user!
 
   # GET /friendship_requests
   # GET /friendship_requests.json
@@ -14,7 +16,7 @@ class FriendshipRequestsController < ApplicationController
 
   # GET /friendship_requests/new
   def new
-    @friendship_request = FriendshipRequest.new
+    @friendship_request = FriendshipRequest.new(user: current_user, friend: @friend)
   end
 
   # GET /friendship_requests/1/edit
@@ -67,6 +69,9 @@ class FriendshipRequestsController < ApplicationController
       @friendship_request = FriendshipRequest.find(params[:id])
     end
 
+    def set_friend
+      @friend = User.find(params[:friend_id]) if params.include? :friend_id
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def friendship_request_params
       params.require(:friendship_request).permit(:user_id, :friend_id)
