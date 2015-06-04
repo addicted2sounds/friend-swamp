@@ -14,12 +14,12 @@ RSpec.describe FriendsController, type: :controller do
   end
 
   describe 'PATCH #relieve' do
-    let(:friendship_request) { create :friendship_request }
     it 'call relieve method on user' do
       skip 'not sure why not working'
-      patch :relieve, { id: friendship_request.friend.to_param }
-      friendship_request.reload
-      expect(friendship_request.status).to eq 'relieved'
+      friendship_request = create :friendship_request
+      expect {
+        patch :relieve, { id: friendship_request.friend.to_param }
+      }.to change(FriendshipRequest, :count).by -1
     end
   end
 
