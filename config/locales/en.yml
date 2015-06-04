@@ -6,3 +6,4 @@ en:
           attributes:
             friend_id:
               already_have_request_from_that_user: You already have incoming friendship request from that user
+  fix_errors_below: "Please, fix errors below"
