@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
            class_name: 'FriendshipRequest'
   has_many :friends, through: :accepted_friendship_requests, source: :user
 
-  has_many :inverse_friendship_requests, class_name: 'FriendshipRequest'
+  has_many :inverse_friendship_requests, class_name: 'FriendshipRequest', foreign_key: :friend_id
   has_many :accepted_inverse_friendship_requests,
            -> { where status: FriendshipRequest.statuses[:accepted] },
            class_name: 'FriendshipRequest', foreign_key: :friend_id

@@ -21,25 +21,25 @@ RSpec.describe User, type: :model do
     end
   end
 
-  # describe '.relieve_frien' do
-  #   let(:request) { create :friendship_request, status: :accepted }
-  #   context 'direct releive' do
-  #     before :each do
-  #       request.user.relieve_friend! request.friend
-  #     end
-  #     it 'request is relieved' do
-  #       request.reload
-  #       expect(request.status).to eq 'relieved'
-  #     end
-  #   end
-  #   context 'inverse releive' do
-  #     before :each do
-  #       request.friend.relieve_friend! request.user
-  #     end
-  #     it 'request is relieved' do
-  #       request.reload
-  #       expect(request.status).to eq 'relieved'
-  #     end
-  #   end
-  # end
+  describe '.relieve_friend' do
+    let(:request) { create :friendship_request, status: :accepted }
+    context 'direct releive' do
+      before :each do
+        request.user.relieve_friend! request.friend
+      end
+      it 'request is relieved' do
+        request.reload
+        expect(request.status).to eq 'relieved'
+      end
+    end
+    context 'inverse releive' do
+      before :each do
+        request.friend.relieve_friend! request.user
+      end
+      it 'request is relieved' do
+        request.reload
+        expect(request.status).to eq 'relieved'
+      end
+    end
+  end
 end
