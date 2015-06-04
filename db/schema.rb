@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20150604132819) do
   create_table "friendship_requests", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "friend_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "status"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "status",     default: 0
   end
 
   add_index "friendship_requests", ["user_id"], name: "index_friendship_requests_on_user_id", using: :btree
