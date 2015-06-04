@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe FriendshipRequest, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '.status' do
+    let(:request) { FriendshipRequest.new }
+    it ':pending by default' do
+      expect(request.status).to eq 'pending'
+    end
+  end
 end
