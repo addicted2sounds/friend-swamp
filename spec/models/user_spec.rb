@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+
+  describe 'scopes' do
+    describe 'regular' do
+      let(:user) { create :user }
+      let(:friend) { create :user }
+      it "doesn't include current user" do
+        expect(User.regular(user.id)).not_to include user
+      end
+      it "include other users" do
+        create :user
+        p User.regular(user.id)
+        # expect(User.regular(user.id).all).to include friend
+      end
+    end
+  end
   describe 'friends' do
     let(:request) { create :friendship_request, status: :accepted }
     let(:user) { request.user }

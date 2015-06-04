@@ -1,20 +1,31 @@
 h1 Listing friendship_requests
 
+h2 Pending
 table.table
-  thead
+  - @friendship_requests.pending.each do |friendship_request|
     tr
-      th User
-      th Status
-      th
+      td = friendship_request.user.email
+      td = friendship_request.status
+      td
+        = link_to 'Delete', friendship_request, method: :delete
 
-  tbody
-    - @friendship_requests.each do |friendship_request|
-      tr
-        td = friendship_request.user.email
-        td = friendship_request.status
-        td
-          = link_to 'Accept', accept_friendship_request_path(friendship_request), method: :patch
-          = link_to 'Decline', decline_friendship_request_path(friendship_request), method: :patch
+h2 Declined
+table.table
+  - @friendship_requests.declined.each do |friendship_request|
+    tr
+      td = friendship_request.user.email
+      td = friendship_request.status
+      td
+        = link_to 'Accept', accept_friendship_request_path(friendship_request), method: :patch
+
+h2 Accepted
+table.table
+  - @friendship_requests.accepted.each do |friendship_request|
+    tr
+      td = friendship_request.user.email
+      td = friendship_request.status
+      td
+        = link_to 'Decline', decline_friendship_request_path(friendship_request), method: :patch
 
 br
 
