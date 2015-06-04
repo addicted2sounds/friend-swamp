@@ -39,9 +39,5 @@ RSpec.describe FriendshipRequestsController, type: :routing do
       expect(patch: '/friendship_requests/1/decline').to route_to('friendship_requests#decline', :id => '1')
     end
 
-    it 'routes to #accepted' do
-      expect(patch: '/friendship_requests/friends').to route_to('friendship_requests#accept', :id => '1')
-    end
-
   end
 end
