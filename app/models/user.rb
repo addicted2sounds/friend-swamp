@@ -16,6 +16,12 @@ class User < ActiveRecord::Base
            class_name: 'FriendshipRequest', foreign_key: :friend_id
   has_many :inverse_friends, through: :accepted_inverse_friendship_requests, source: :user
 
+  def self.regular(user_id)
+    # joins(:friendship_requests, :inverse_friendship_requests)
+    where.not(id: user_id)
+      .includes(:friendship_requests).where.not('friendship_requests.user_id' => user_id)
+  end
+
   def relieve_friend!(user)
     friendship_requests.where(friend_id: user.id).each do |request|
       request.relieve!
