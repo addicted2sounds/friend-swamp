@@ -3,8 +3,7 @@ class FriendsController < ApplicationController
   before_action :set_friend, only: [:relieve]
   # GET /friends
   def index
-    @friends = current_user.friends
-    @inverse_friends = current_user.inverse_friends
+    @user = current_user
   end
 
   # POST /friends/:id/relieve

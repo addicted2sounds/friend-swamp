@@ -6,7 +6,7 @@ table.table
       th
 
   tbody
-    - @friends.each do |user|
+    - @user.friends.each do |user|
       tr
         td = user.email
         td
@@ -20,7 +20,7 @@ table.table
       th
 
   tbody
-    - @inverse_friends.each do |user|
+    - @user.inverse_friends.each do |user|
       tr
         td = user.email
         td

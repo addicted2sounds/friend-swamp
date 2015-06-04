@@ -5,10 +5,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :friendship_requests
-  has_many :inverse_friendship_requests, class_name: 'FriendshipRequest', foreign_key: :friend_id
+  has_many :accepted_friendship_requests,
+           -> { where status: FriendshipRequest.statuses[:accepted] },
+           class_name: 'FriendshipRequest'
+  has_many :friends, through: :accepted_friendship_requests, source: :user
 
-  has_many :friends, through: :friendship_requests
-  has_many :inverse_friends, through: :inverse_friendship_requests, source: :user
+  has_many :inverse_friendship_requests, class_name: 'FriendshipRequest'
+  has_many :accepted_inverse_friendship_requests,
+           -> { where status: FriendshipRequest.statuses[:accepted] },
+           class_name: 'FriendshipRequest', foreign_key: :friend_id
+  has_many :inverse_friends, through: :accepted_inverse_friendship_requests, source: :user
 
   def relieve_friend!(user)
     friendship_requests.where(friend_id: user.id).each do |request|
