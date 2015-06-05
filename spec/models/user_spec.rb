@@ -2,20 +2,21 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  describe 'scopes' do
-    describe 'regular' do
-      let(:user) { create :user }
-      let(:friend) { create :user }
-      it "doesn't include current user" do
-        expect(User.regular(user.id)).not_to include user
-      end
-      it "include other users" do
-        create :user
-        p User.regular(user.id)
-        # expect(User.regular(user.id).all).to include friend
-      end
-    end
-  end
+  # describe 'scopes' do
+  #   describe 'regular' do
+  #     let(:user) { create :user }
+  #     let(:friend) { create :user }
+  #     it "doesn't include current user" do
+  #       expect(User.regular(user.id)).not_to include user
+  #     end
+  #     it "include other users" do
+  #       create :user
+  #       p User.regular(user.id)
+  #       # expect(User.regular(user.id).all).to include friend
+  #     end
+  #   end
+  # end
+
   describe 'friends' do
     let(:request) { create :friendship_request, status: :accepted }
     let(:user) { request.user }
@@ -23,6 +24,7 @@ RSpec.describe User, type: :model do
     it 'accepted_friendship_requests works!' do
       expect(user.accepted_friendship_requests).to eq [request]
     end
+
     it 'has friend through request' do
       expect(user.friends.first.id).to eq user.id
     end
@@ -34,26 +36,34 @@ RSpec.describe User, type: :model do
     it 'has inverse friend through request' do
       expect(friend.inverse_friends.first.id).to eq user.id
     end
+
+    describe '.friendship_request_with' do
+      context 'direct friendship' do
+        subject { user.friendship_requests_with(friend) }
+        it { is_expected.to be_a_kind_of FriendshipRequest }
+      end
+      context 'inverse friendship' do
+        subject { friend.friendship_requests_with(user) }
+        it { is_expected.to be_a_kind_of FriendshipRequest }
+      end
+    end
   end
 
   describe '.relieve_friend' do
-    let(:request) { create :friendship_request, status: :accepted }
     context 'direct releive' do
-      before :each do
-        request.user.relieve_friend! request.friend
-      end
-      it 'request is relieved' do
-        request.reload
-        expect(request.status).to eq 'relieved'
+      it 'request is deleted' do
+        request = create :friendship_request, status: :accepted
+        expect{
+          request.user.relieve_friend! request.friend
+        }.to change(FriendshipRequest, :count).by -1
       end
     end
     context 'inverse releive' do
-      before :each do
-        request.friend.relieve_friend! request.user
-      end
-      it 'request is relieved' do
-        request.reload
-        expect(request.status).to eq 'relieved'
+      it 'request is deleted' do
+        request = create :friendship_request, status: :accepted
+        expect{
+          request.friend.relieve_friend! request.user
+        }.to change(FriendshipRequest, :count).by -1
       end
     end
   end
