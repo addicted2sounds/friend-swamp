@@ -37,9 +37,11 @@ RSpec.describe FriendshipRequestsController, type: :controller do
   end
 
   describe 'PATCH #accept' do
+    before :each do
+      sign_in friendship_request.friend
+    end
     let(:friendship_request) { create :friendship_request }
     it 'change request status to :accepted' do
-      skip 'not sure why not working'
       patch :accept, { id: friendship_request.to_param }
       friendship_request.reload
       expect(friendship_request.status).to eq 'accepted'
@@ -47,9 +49,12 @@ RSpec.describe FriendshipRequestsController, type: :controller do
   end
 
   describe 'PATCH #decline' do
+    before :each do
+      sign_in friendship_request.friend
+    end
     let(:friendship_request) { create :friendship_request }
     it 'change request status to :declined' do
-      skip 'not sure why not working'
+      # skip 'not sure why not working'
       patch :decline, { id: friendship_request.to_param }
       friendship_request.reload
       expect(friendship_request.status).to eq 'declined'
@@ -59,17 +64,18 @@ RSpec.describe FriendshipRequestsController, type: :controller do
   describe 'DELETE #delete' do
     before :each do
       @friendship_request = create :friendship_request
+      sign_in @friendship_request.user
     end
     it 'delete own request' do
-      skip 'not sure why not working'
       expect {
         delete :destroy, id: @friendship_request.to_param
       }.to change(FriendshipRequest, :count).by -1
     end
     it 'redirect when try to delete someone else request' do
       new_request = create :friendship_request
-      delete :destroy, id: new_request.to_param
-      expect(response.status).to eq(302)
+      expect {
+        delete :destroy, id: new_request.to_param
+      }.to raise_exception ActiveRecord::RecordNotFound
     end
   end
 end
