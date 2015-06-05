@@ -15,17 +15,17 @@ RSpec.describe FriendshipRequestsController, type: :routing do
       expect(:get => "/friendship_requests/1").to route_to("friendship_requests#show", :id => "1")
     end
 
-    it "routes to #edit" do
-      expect(:get => "/friendship_requests/1/edit").to route_to("friendship_requests#edit", :id => "1")
-    end
+    # it "routes to #edit" do
+    #   expect(:get => "/friendship_requests/1/edit").to route_to("friendship_requests#edit", :id => "1")
+    # end
 
     it "routes to #create" do
       expect(:post => "/friendship_requests").to route_to("friendship_requests#create")
     end
 
-    it "routes to #update" do
-      expect(:put => "/friendship_requests/1").to route_to("friendship_requests#update", :id => "1")
-    end
+    # it "routes to #update" do
+    #   expect(:put => "/friendship_requests/1").to route_to("friendship_requests#update", :id => "1")
+    # end
 
     it "routes to #destroy" do
       expect(:delete => "/friendship_requests/1").to route_to("friendship_requests#destroy", :id => "1")

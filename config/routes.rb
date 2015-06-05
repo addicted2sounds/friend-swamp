@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :users
   root 'users#index'
 
-  resources :friendship_requests do
+  resources :friendship_requests, except: [:edit, :update] do
     patch :accept, on: :member
     patch :decline, on: :member
     collection do
