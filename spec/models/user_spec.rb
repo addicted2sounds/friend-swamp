@@ -47,6 +47,19 @@ RSpec.describe User, type: :model do
         it { is_expected.to be_a_kind_of FriendshipRequest }
       end
     end
+
+    describe '.is_a_friend_of?' do
+      it { expect(user.is_a_friend_of?(friend)).to be_truthy }
+      it { expect(friend.is_a_friend_of?(user)).to be_truthy }
+    end
+
+    describe '.has_friendship_request_from?' do
+      it { expect(friend.has_friendship_request_from?(user)).to be_truthy }
+    end
+
+    describe '.has_friendship_request_to?' do
+      it { expect(friend.has_friendship_request_from?(user)).to be_truthy }
+    end
   end
 
   describe '.relieve_friend' do

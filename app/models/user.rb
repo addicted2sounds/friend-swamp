@@ -34,4 +34,17 @@ class User < ActiveRecord::Base
     friendship_requests.where(user_id: self.id, friend_id: user.id).first ||
         inverse_friendship_requests.where(friend_id: self.id, user_id: user.id).first
   end
+
+  def is_a_friend_of?(user)
+    accepted_friendship_requests.where(friend_id: user.id).any? ||
+        accepted_inverse_friendship_requests.where(user_id: user.id).any?
+  end
+
+  def has_friendship_request_from?(user)
+    inverse_friendship_requests.where(user_id: user.id).any?
+  end
+
+  def has_friendship_request_to?(user)
+    friendship_requests.where(friend_id: user.id).any?
+  end
 end
