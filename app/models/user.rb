@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def friendship_requests_with(user)
+  def friendship_request_with(user)
     friendship_requests.where(user_id: self.id, friend_id: user.id).first ||
         inverse_friendship_requests.where(friend_id: self.id, user_id: user.id).first
   end

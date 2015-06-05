@@ -39,11 +39,11 @@ RSpec.describe User, type: :model do
 
     describe '.friendship_request_with' do
       context 'direct friendship' do
-        subject { user.friendship_requests_with(friend) }
+        subject { user.friendship_request_with(friend) }
         it { is_expected.to be_a_kind_of FriendshipRequest }
       end
       context 'inverse friendship' do
-        subject { friend.friendship_requests_with(user) }
+        subject { friend.friendship_request_with(user) }
         it { is_expected.to be_a_kind_of FriendshipRequest }
       end
     end
