@@ -3,9 +3,8 @@ require 'rails_helper'
 RSpec.describe 'friendship_requests/index', type: :view do
   let(:friendship_request) { create :friendship_request}
   before(:each) do
-    assign(:friendship_requests, [
-       friendship_request
-    ])
+    sign_in friendship_request.friend
+    assign(:friendship_requests, FriendshipRequest.all)
     render
   end
 
