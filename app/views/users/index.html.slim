@@ -11,9 +11,8 @@ table.table
     - @users.each do |user|
       tr
         td = user.email
+        td = render 'users/friendship_status', user: user
         td = link_to 'Show', user
-        td = link_to 'Add to friends', new_friendship_request_path(friend_id: user.id)
-
 br
 
 = link_to 'New User', new_user_path

@@ -1,0 +1,9 @@
+- if current_user.is_a_friend_of?(user)
+  = t(:friends)
+  = link_to t(:releive_friend), relieve_friend_path(user), method: :patch
+- elsif current_user.has_incoming_friendship_request_from?(user)
+  = link_to 'Add to friends', new_friendship_request_path(friend_id: user.id)
+- elsif current_user.has_sent_friendship_request_to?(user)
+  = link_to 'Revoke', friendship_request_path(friend_id: user.id)
+- else
+  = link_to 'Add to friends', new_friendship_request_path(friend_id: user.id)
