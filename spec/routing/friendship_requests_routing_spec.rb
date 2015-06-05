@@ -40,7 +40,7 @@ RSpec.describe FriendshipRequestsController, type: :routing do
     end
 
     it 'routes to #outgoing' do
-      expect(patch: '/friendship_requests/outgoing').to route_to('friendship_requests#outgoing')
+      expect(get: '/friendship_requests/outgoing').to route_to('friendship_requests#outgoing')
     end
   end
 end

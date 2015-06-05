@@ -80,6 +80,9 @@ class FriendshipRequestsController < ApplicationController
   # DELETE /friendship_requests/1
   # DELETE /friendship_requests/1.json
   def destroy
+    @friendship_request = FriendshipRequest
+                              .where(user_id: current_user.id)
+                              .find(params[:id])
     @friendship_request.destroy
     respond_to do |format|
       format.html { redirect_to friendship_requests_url, notice: 'Friendship request was successfully destroyed.' }
