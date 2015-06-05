@@ -22,11 +22,12 @@ RSpec.describe UsersController, type: :controller do
   let(:user) { create :user }
   before :each do
     sign_in user
+    @co_user = create :user
   end
-  describe "GET #index" do
-    it "assigns all users as @users" do
+  describe 'GET #index' do
+    it 'assigns all users as @users' do
       get :index
-      expect(assigns(:users)).to eq([user])
+      expect(assigns(:users)).to eq [@co_user]
     end
   end
   #
